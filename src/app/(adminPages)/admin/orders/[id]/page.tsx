@@ -6,6 +6,8 @@ import { formatDate } from "@/lib/dateUtils";
 //Import Needed Components
 import StatusChange from "@/components/(AdminComponents)/StatusChange";
 
+export const revalidate = 60
+
 const Page = async ({ params }: { params: { id: string } }) => {
     const packageId = params.id
 

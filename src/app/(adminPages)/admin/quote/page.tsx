@@ -3,6 +3,8 @@ import AdminHeading from "@/components/(AdminComponents)/AdminHeading";
 import getAllQuote from "@/app/actions/getAllQuote";
 import QuoteDetails from "@/components/(AdminComponents)/QuoteDetails";
 
+export const revalidate = 60
+
 const page = async () => {
     const quoteDetails = await getAllQuote()
     
