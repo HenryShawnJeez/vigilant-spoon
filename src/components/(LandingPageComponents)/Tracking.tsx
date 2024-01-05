@@ -13,14 +13,12 @@ type trackingProps = {
 const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) => {
 
     const statusChangesArray = packageTracking.statusChanges;
-    console.log({statusChangesArray})
     //Get Each Statuses
     const firstStatus = statusChangesArray[0]
     const secondStatus = statusChangesArray[1]
     const thirdStatus = statusChangesArray[2]
     const fourthStatus = statusChangesArray[3]
     const fifthStatus = statusChangesArray[4]
-    console.log(fifthStatus.location)
     const lastStatus = statusChangesArray[statusChangesArray.length - 1]?.status;
 
     
@@ -50,7 +48,7 @@ const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) =>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
                             <p className="text-xs font-semibold">FROM</p>
                             <p className="font-light text-base sm:text-lg md:text-xl">{firstStatus && packageTracking.originPort}</p>
-                            <p className="text-xs text-black">{firstStatus ? firstStatus?.location : ""}</p>
+                            <p className="text-xs text-black capitalize">{firstStatus ? firstStatus?.location : ""}</p>
                             <p className="text-xs text-bgGreen">{formatDateTime(firstStatus?.timestamp ?? "Time Unavailable")}</p>
                         </div>
                     </div>
@@ -59,7 +57,7 @@ const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) =>
                         <div className={`${secondStatus?.status === lastStatus ? "bg-bgGreen animate-bounce" : "bg-white"} h-2 w-2 rounded-[50%] mx-auto absolute z-10 left-[40%]`}></div>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
                             <p className="font-light text-base sm:text-lg md:text-xl">{formatStatus(secondStatus?.status) ?? ""}</p>
-                            <p className="text-xs text-black">{secondStatus ? secondStatus?.location : ""}</p>
+                            <p className="text-xs text-black capitalize">{secondStatus ? secondStatus?.location : ""}</p>
                             <p className="text-xs text-bgGreen">{secondStatus ? (formatDateTime(secondStatus?.timestamp)) : ""}</p>
                         </div>
                     </div>
@@ -68,7 +66,7 @@ const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) =>
                         <div className={`${thirdStatus?.status === lastStatus ? "bg-bgGreen animate-bounce" : "bg-white"} h-2 w-2 rounded-[50%] mx-auto absolute z-10 left-[40%]`}></div>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
                             <p className="font-light text-base sm:text-lg md:text-xl">{formatStatus(thirdStatus?.status) ?? ""}</p>
-                            <p className="text-xs text-black">{thirdStatus ? thirdStatus?.location : ""}</p>
+                            <p className="text-xs text-black capitalize">{thirdStatus ? thirdStatus?.location : ""}</p>
                             <p className="text-xs text-bgGreen">{thirdStatus ? (formatDateTime(thirdStatus?.timestamp)) : ""}</p>
                         </div>
                     </div>
@@ -77,7 +75,7 @@ const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) =>
                         <div className={`${fourthStatus?.status === lastStatus ? "bg-bgGreen animate-bounce" : "bg-white"} h-2 w-2 rounded-[50%] mx-auto absolute z-10 left-[40%]`}></div>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
                             <p className="font-light text-base sm:text-lg md:text-xl">{formatStatus(fourthStatus?.status) ?? ""}</p>
-                            <p className="text-xs text-black">{fourthStatus ? fourthStatus?.location : ""}</p>
+                            <p className="text-xs text-black capitalize">{fourthStatus ? fourthStatus?.location : ""}</p>
                             <p className="text-xs text-bgGreen">{fourthStatus ? (formatDateTime(fourthStatus?.timestamp)) : ""}</p>
                         </div>
                     </div>
