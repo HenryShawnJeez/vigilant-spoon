@@ -7,7 +7,6 @@ import Tracking from "./Tracking";
 import getPackageWithStatusChanges from "@/app/actions/getIndividualStatus";
 
 export default function TrackingForm() {
-  const [loading, setLoading] = useState<boolean>(false)
   const [trackingID, setTrackingID] = useState<string>("");
   const [packageDetails, setPackageDetails] = useState<any>();
   const [show, setShow] = useState<boolean>(false);
@@ -16,9 +15,7 @@ export default function TrackingForm() {
   const handleHideModal = () => {
     return setShow((prev) => !prev);
   };
-  const changeStatus = () => {
-    return setLoading((prev) => !prev)
-  }
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTrackingID(e.target.value);
   };
@@ -26,7 +23,7 @@ export default function TrackingForm() {
 
   const trackPackage = async (formData : FormData) => {
 
-    changeStatus()
+    toast.info("Fetching Your Tracking Details")
     const trackingNumber = formData.get("trackingNumber")
 
     try {
@@ -34,13 +31,11 @@ export default function TrackingForm() {
       if (trackingNumber) {
       const packageData = await getPackageWithStatusChanges(trackingNumber as string);
       toast.success("Your Package Tracking Details.")
-      changeStatus()
       setPackageDetails(packageData);
       handleHideModal()
       }
 
     } catch (error) {
-      changeStatus()
       toast.error("Package tracking unavailable. Please try again later.")
     }
   }
@@ -70,7 +65,7 @@ export default function TrackingForm() {
             </p>
           </div>
           <button type="submit" className="mt-4 w-full cursor-pointer bg-orange py-2 text-center text-white duration-500 hover:bg-blue md:py-3">
-            {loading ? "Tracking Package..." : "Track"}
+            Track
           </button>
         </form>
       </div>
