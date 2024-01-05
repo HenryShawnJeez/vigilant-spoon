@@ -1,9 +1,11 @@
 "use client"
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { formatDate } from "@/lib/dateUtils";
+import { formatDateTime } from "@/lib/dateTimeUtils";
+
 //Import Needed Icons
 import { PiPackageFill } from "react-icons/pi";
+
 
 
 const Transaction = (orders : any) => {
@@ -23,7 +25,7 @@ const Transaction = (orders : any) => {
                     <p className="text-base sm:text-lg lg:text-xl font-bold w-1/4 text-center">{order.trackingNumber}</p>
                     <p className="text-base sm:text-lg lg:text-xl font-bold w-1/4 text-center">{order.originPort}</p>
                     <p className="text-base sm:text-lg lg:text-xl font-bold w-1/4 text-center">{new Date(order.deliveryRequiredDate).toLocaleDateString()}</p>
-                    <p className="text-sm lg:text-base w-1/4 text-center text-green-600 font-semibold">{formatDate(order.dateCreated)}</p>
+                    <p className="text-sm lg:text-base w-1/4 text-center text-green-600 font-semibold">{formatDateTime(order.dateCreated)}</p>
                 </div>  
              ))}
             </div>
