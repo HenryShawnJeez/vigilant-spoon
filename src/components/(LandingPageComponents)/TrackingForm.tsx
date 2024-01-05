@@ -7,39 +7,40 @@ import Tracking from "./Tracking";
 import getPackageWithStatusChanges from "@/app/actions/getIndividualStatus";
 
 export default function TrackingForm() {
+  const [loading, setLoading] = useState<boolean>(false)
   const [trackingID, setTrackingID] = useState<string>("");
   const [packageDetails, setPackageDetails] = useState<any>();
   const [show, setShow] = useState<boolean>(false);
-  const [loading, setLoading] = useState<string>("false")
   
   //Functions
   const handleHideModal = () => {
     return setShow((prev) => !prev);
   };
+  const changeStatus = () => {
+    return setLoading((prev) => !prev)
+  }
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTrackingID(e.target.value);
   };
 
 
   const trackPackage = async (formData : FormData) => {
-    
-    setLoading("true")
+
+    changeStatus()
     const trackingNumber = formData.get("trackingNumber")
-    console.log(loading)
-    console.log(trackingNumber)
 
     try {
 
       if (trackingNumber) {
       const packageData = await getPackageWithStatusChanges(trackingNumber as string);
-      setPackageDetails(packageData);
       toast.success("Your Package Tracking Details.")
-      setLoading("false")
+      changeStatus()
+      setPackageDetails(packageData);
       handleHideModal()
       }
 
     } catch (error) {
-      setLoading("false")
+      changeStatus()
       toast.error("Package tracking unavailable. Please try again later.")
     }
   }
@@ -47,7 +48,7 @@ export default function TrackingForm() {
     <>
       {show && (
         <Tracking
-        trackingID={trackingID}
+          trackingID={trackingID}
           packageTracking={packageDetails}
           onHideModal={handleHideModal}
         />
@@ -69,7 +70,7 @@ export default function TrackingForm() {
             </p>
           </div>
           <button type="submit" className="mt-4 w-full cursor-pointer bg-orange py-2 text-center text-white duration-500 hover:bg-blue md:py-3">
-            {loading === "true" ? "Tracking Package..." : "Track"}
+            {loading ? "Tracking Package..." : "Track"}
           </button>
         </form>
       </div>
