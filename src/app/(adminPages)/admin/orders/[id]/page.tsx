@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/dateUtils";
 //Import Needed Components
 import StatusChange from "@/components/(AdminComponents)/StatusChange";
 
+
 export const revalidate = 60
 
 const Page = async ({ params }: { params: { id: string } }) => {
@@ -69,9 +70,10 @@ const Page = async ({ params }: { params: { id: string } }) => {
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Delivery Required Date and Time<span className="text-orange text-right">{formatDateTime(thePackage.deliveryRequiredDate)}</span></p>
             <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status<span className="text-orange">{getDisplayStatus(theStatus ? theStatus.status : "No Status Yet")}</span></p>
             <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status Location<span className="text-orange text-right">{theStatus ? theStatus.location ?? "No Location Yet" : "No Location Yet"}</span></p>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status Time Update<span className="text-orange text-right">{theStatus ? (formatDate(theStatus.timestamp)) : "No Status Yet"}</span></p>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status Time Update<span className="text-orange text-right">{theStatus ? (formatDateTime(theStatus.timestamp)) : "No Time Yet"}</span></p>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Estimated Delivery Date and Time<span className="text-orange text-right">{formatDateTime(thePackage.estimatedDeliveryDate)}</span></p>
-                <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Package Date Created<span className="text-orange text-right">{formatDate(thePackage.dateCreated)}</span></p>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Desired Created Date and Time<span className="text-orange text-right">{formatDateTime(thePackage.dateCreated)}</span></p>
+                <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Real Created Date<span className="text-orange text-right">{formatDate(thePackage.realDateCreated)}</span></p>
                 <div className="border-b border-black my-4"></div>
                 <p className="text-xs sm:text-sm md:text-base font-bold mt-4 text-center">Update Package Status</p>
                 <StatusChange thePackageID={packageId}/>

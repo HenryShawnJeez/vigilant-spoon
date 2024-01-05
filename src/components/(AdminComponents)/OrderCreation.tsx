@@ -24,6 +24,7 @@ type InitialProps = {
   deliveryRequiredDate: string;
   statusChanges: object;
   estimatedDeliveryDate: string;
+  dateCreated: string;
 };
 
 const initialState: InitialProps = {
@@ -39,6 +40,7 @@ const initialState: InitialProps = {
   deliveryRequiredDate: "",
   statusChanges: {},
   estimatedDeliveryDate: "",
+  dateCreated: "",
 };
 
 const OrderCreation = ({ onClose }: OrderDetailsProps) => {
@@ -273,6 +275,22 @@ const OrderCreation = ({ onClose }: OrderDetailsProps) => {
               id="height"
               className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
               placeholder="The height in CM"
+            />
+          </div>
+          <div className="mt-4">
+            <label
+              htmlFor="dateCreated"
+              className="block cursor-pointer"
+            >
+              Desired Created Date and Time
+            </label>
+            <input
+              required
+              onChange={handleChange}
+              type="datetime-local"
+              name="dateCreated"
+              id="dateCreated"
+              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black focus:outline-orange md:p-3"
             />
           </div>
           <div className="mt-4">

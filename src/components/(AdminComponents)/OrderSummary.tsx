@@ -1,11 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { formatDate } from "@/lib/dateUtils";
+import { formatDateTime } from "@/lib/dateTimeUtils";
+
 //Import Needed Icons
 import { PiPackageFill } from "react-icons/pi";
 //Import Needed Components
 import OrderCreation from "./OrderCreation";
+
 
 const OrderSummary = (orders: any) => {
   const router = useRouter();
@@ -55,7 +57,7 @@ const OrderSummary = (orders: any) => {
                     {new Date(order.deliveryRequiredDate).toLocaleDateString()}
                   </p>
                   <p className="w-1/4 text-center text-sm font-semibold text-green-600 lg:text-base">
-                    {formatDate(order.dateCreated)}
+                    {formatDateTime(order.dateCreated)}
                   </p>
                 </div>
               ))}

@@ -16,9 +16,10 @@ export async function POST(request: Request) {
     deliveryRequiredDate,
     statusChanges,
     estimatedDeliveryDate,
+    dateCreated,
   } = body;
 
-  if(!trackingNumber || !originPort || !destinationPort || !transportationMode || !pieces || !length || !weight || !width || !height || !deliveryRequiredDate || !estimatedDeliveryDate) {
+  if(!trackingNumber || !originPort || !destinationPort || !transportationMode || !pieces || !length || !weight || !width || !height || !deliveryRequiredDate || !estimatedDeliveryDate || !dateCreated ) {
     return new NextResponse('Missing Fields', { status: 400 })
 }
 
@@ -37,6 +38,7 @@ export async function POST(request: Request) {
       deliveryRequiredDate,
       statusChanges,
       estimatedDeliveryDate,
+      dateCreated,
     },
   });
 

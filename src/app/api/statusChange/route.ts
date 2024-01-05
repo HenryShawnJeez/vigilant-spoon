@@ -7,7 +7,8 @@ export async function POST (request: Request){
     const {
         statusChanges,
         packageID,
-        location
+        location,
+        timestamp,
     } = body
 
     if(!statusChanges || !packageID){
@@ -19,6 +20,7 @@ export async function POST (request: Request){
         data: {
             status: statusChanges,
             location,
+            timestamp,
             package: {
                 connect: {
                     id:packageID
