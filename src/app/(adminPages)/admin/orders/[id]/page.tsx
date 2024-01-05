@@ -24,22 +24,22 @@ const Page = async ({ params }: { params: { id: string } }) => {
               return 'Package Received';
               break;
             case 'InTransitRoad':
-                return 'In Transit (Road)';
+                return 'Package In Transit (Road)';
               break;
             case 'InFlight':
-                return 'In Flight';
+                return 'Package In Flight';
               break;
             case 'InShip':
-                return 'In Ship';
+                return 'Package In Ship';
               break;
             case 'InRail':
-                return 'In Train';
+                return 'Package In Train';
               break;
             case 'Arrived':
                 return 'Package Arrived';
               break;
             case 'OutForDelivery':
-                return 'Out For Delivery';
+                return 'Package Out For Delivery';
               break;
             case 'Delivered':
                 return 'Package Delivered';
@@ -66,6 +66,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Height (CM)<span className="text-orange">{thePackage.height} CM</span></p>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Delivery Required Date and Time<span className="text-orange text-right">{formatDateTime(thePackage.deliveryRequiredDate)}</span></p>
             <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status<span className="text-orange">{getDisplayStatus(theStatus ? theStatus.status : "No Status Yet")}</span></p>
+            <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status Location<span className="text-orange text-right">{theStatus ? theStatus.location ?? "No Location Yet" : "No Location Yet"}</span></p>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Current Status Time Update<span className="text-orange text-right">{theStatus ? (formatDate(theStatus.timestamp)) : "No Status Yet"}</span></p>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Estimated Delivery Date and Time<span className="text-orange text-right">{formatDateTime(thePackage.estimatedDeliveryDate)}</span></p>
                 <p className="text-xs sm:text-sm md:text-base lg:text-lg font-bold flex justify-between gap-x-5">Package Date Created<span className="text-orange text-right">{formatDate(thePackage.dateCreated)}</span></p>

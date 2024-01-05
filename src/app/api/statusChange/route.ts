@@ -6,7 +6,8 @@ export async function POST (request: Request){
 
     const {
         statusChanges,
-        packageID
+        packageID,
+        location
     } = body
 
     if(!statusChanges || !packageID){
@@ -17,6 +18,7 @@ export async function POST (request: Request){
     const newStatus = await prisma.packageStatusChange.create({
         data: {
             status: statusChanges,
+            location,
             package: {
                 connect: {
                     id:packageID

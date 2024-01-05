@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 
@@ -10,7 +10,8 @@ export default function TrackingForm() {
   const [trackingID, setTrackingID] = useState<string>("");
   const [packageDetails, setPackageDetails] = useState<any>();
   const [show, setShow] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, setLoading] = useState<string>("false")
+  
   //Functions
   const handleHideModal = () => {
     return setShow((prev) => !prev);
@@ -18,19 +19,27 @@ export default function TrackingForm() {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTrackingID(e.target.value);
   };
+
+
   const trackPackage = async (formData : FormData) => {
+    
+    setLoading("true")
     const trackingNumber = formData.get("trackingNumber")
-    setLoading(true)
+    console.log(loading)
+    console.log(trackingNumber)
+
     try {
+
       if (trackingNumber) {
       const packageData = await getPackageWithStatusChanges(trackingNumber as string);
       setPackageDetails(packageData);
       toast.success("Your Package Tracking Details.")
-      setLoading(false)
+      setLoading("false")
       handleHideModal()
       }
+
     } catch (error) {
-      setLoading(false)
+      setLoading("false")
       toast.error("Package tracking unavailable. Please try again later.")
     }
   }
@@ -59,11 +68,8 @@ export default function TrackingForm() {
               Tracking Number
             </p>
           </div>
-          <button
-            type="submit"
-            className="mt-4 w-full cursor-pointer bg-orange py-2 text-center text-white duration-500 hover:bg-blue md:py-3"
-          >
-            {loading ? "Tracking Package..." : "Track"}
+          <button type="submit" className="mt-4 w-full cursor-pointer bg-orange py-2 text-center text-white duration-500 hover:bg-blue md:py-3">
+            {loading === "true" ? "Tracking Package..." : "Track"}
           </button>
         </form>
       </div>

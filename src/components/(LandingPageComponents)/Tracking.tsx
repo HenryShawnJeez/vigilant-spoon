@@ -13,6 +13,7 @@ type trackingProps = {
 const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) => {
 
     const statusChangesArray = packageTracking.statusChanges;
+    console.log({statusChangesArray})
     //Get Each Statuses
     const firstStatus = statusChangesArray[0]
     const secondStatus = statusChangesArray[1]
@@ -64,6 +65,7 @@ const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) =>
                         <div className={`${thirdStatus?.status === lastStatus ? "bg-bgGreen animate-bounce" : "bg-white"} h-2 w-2 rounded-[50%] mx-auto absolute z-10 left-[40%]`}></div>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
                             <p className="font-light text-base sm:text-lg md:text-xl">{formatStatus(thirdStatus?.status) ?? ""}</p>
+
                             <p className="text-xs text-bgGreen">{thirdStatus ? (formatDateTime(thirdStatus?.timestamp)) : ""}</p>
                         </div>
                     </div>
@@ -78,11 +80,11 @@ const Tracking = ({trackingID, packageTracking, onHideModal }: trackingProps) =>
                     <div className="relative">
                         <div className={`h-[5.5rem] w-3 ${fifthStatus ? "bg-bgGreen" : "bg-bgGrey"} mx-auto`}></div>
                     </div>
-                    <div className="relative flex gap-x-3 items-center">
+                    <div className="relative flex items-center">
                        <div className={`w-10 h-10 rounded-[50%] ${fifthStatus ? "bg-bgGreen" : "bg-bgGrey"} flex items-center justify-center -mt-2`}><GoCheckCircle className={`${fifthStatus ? "text-white" : "text-bgGrey"}`} size={26}/></div>
-                       <div className="absolute left-[100%] w-[14rem] sm:w-[20rem] -mt-2">
+                       <div className="absolute left-[100%] w-[14rem] sm:w-[20rem] -mt-2 ml-2">
                             <p className="font-light text-sm sm:text-base md:text-lg">{fifthStatus && "DELIVERED"}</p>
-                            <p className={`${fifthStatus ? "" : "hidden"} text-xs font-semibold text-bgGreen -mt-1`}>{packageTracking.destinationPort}</p>
+                            <p className={`${fifthStatus ? "" : "hidden"} text-base font-medium text-bgGreen -mt-1`}>{packageTracking.destinationPort}</p>
                         </div> 
                     </div>
                     

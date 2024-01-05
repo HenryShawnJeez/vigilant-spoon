@@ -5,7 +5,7 @@ import QuoteDetails from "@/components/(AdminComponents)/QuoteDetails";
 
 const page = async () => {
     const quoteDetails = await getAllQuote()
-    console.log({quoteDetails})
+    
     return ( 
         <main>
             <div className="px-4 py-4 lg:px-10">

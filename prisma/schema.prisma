@@ -43,6 +43,7 @@ model PackageStatusChange {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   timestamp DateTime      @default(now())
   status    PackageStatus
+  location  String?
   package   Package       @relation(fields: [packageId], references: [id])
   packageId String        @db.ObjectId
 }

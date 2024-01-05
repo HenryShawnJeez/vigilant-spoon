@@ -8,10 +8,12 @@ import Link from "next/link";
 type InitialStateProps = {
   packageID: string;
   statusChanges: string;
+  location: string;
 };
 const initialState: InitialStateProps = {
   packageID: "",
   statusChanges: "",
+  location: "",
 };
 const StatusChange = ({ thePackageID }: { thePackageID: string }) => {
     const router = useRouter()
@@ -30,7 +32,7 @@ const StatusChange = ({ thePackageID }: { thePackageID: string }) => {
     event.preventDefault();
     setLoading(true)
     const formData = { ...state, packageID: thePackageID }
-    console.log(formData)
+
     makeApiRequest("/statusChange", "post", formData, {
       onSuccess: () => {
         // Handle success
@@ -81,6 +83,11 @@ const StatusChange = ({ thePackageID }: { thePackageID: string }) => {
           <option value="OutForDelivery">Out For Delivery</option>
           <option value="Delivered">Package Delivered</option>
         </select>
+        <div className="mt-8 flex flex-col gap-y-2">
+          <label htmlFor="location" className="cursor-pointer text-xs font-bold md:text-sm">Enter Location</label>
+          <input type="text" name="location" id="location" className="font-bold focus:bg-white outline-0 border focus:border-orange px-8 py-2 md:py-3 border-black rounded-md text-sm md:text-base" onChange={handleChange}
+          value={state.location}/>
+        </div>
         <div className="mt-8">
           <input
             type="submit"
