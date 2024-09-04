@@ -23,10 +23,7 @@ const OrderSummary = (orders: any) => {
       <main className="special mt-10 overflow-x-auto">
         <div className="flex w-full min-w-[40rem] justify-between">
           <p className="text-lg font-bold lg:text-xl">Ongoing Shipments</p>
-          <button
-            onClick={toggleCreate}
-            className="rounded-md bg-orange p-3 font-semibold text-white duration-500 hover:bg-orange1"
-          >
+          <button onClick={toggleCreate} className="rounded-md bg-orange p-3 font-semibold text-white duration-500 hover:bg-orange1">
             Create New Order
           </button>
         </div>
@@ -37,32 +34,31 @@ const OrderSummary = (orders: any) => {
             </p>
           </div>
         )}
-        {orders.length !== 0 && (
-          <div className="mt-10 w-full min-w-[40rem]">
-            {orders?.orders &&
-              orders.orders.map((order: any) => (
-                <div
-                  key={order.id}
-                  onClick={() => router.push(`/admin/orders/${order.id}`)}
-                  className="mt-4 flex cursor-pointer items-center justify-between border-b border-gray-400 py-2"
-                >
-                  <PiPackageFill className="text-orange" size={30} />
-                  <p className="w-1/4 text-center text-base font-bold sm:text-lg lg:text-xl">
-                    {order.trackingNumber}
-                  </p>
-                  <p className="w-1/4 text-center text-base font-bold sm:text-lg lg:text-xl">
-                    {order.originPort}
-                  </p>
-                  <p className="w-1/4 text-center text-base font-bold sm:text-lg lg:text-xl">
-                    {new Date(order.deliveryRequiredDate).toLocaleDateString()}
-                  </p>
-                  <p className="w-1/4 text-center text-sm font-semibold text-green-600 lg:text-base">
-                    {formatDateTime(order.dateCreated)}
-                  </p>
+        <div className="mt-10 w-full min-w-[40rem]">
+          {orders?.orders &&
+            orders.orders.map((order: any) => (
+              <div key={order.id} onClick={() => router.push(`/admin/orders/${order.id}`)} className="mt-4 p-2 flex cursor-pointer hover:bg-slate-100 items-center justify-between border-b border-gray-400 duration-300">
+                <div className="w-1/4 flex flex-col gap-y-1">
+                  <p className="text-[10px] md:text-xs text-slate-700 font-medium">Tracking Code</p>
+                  <p className="font-semibold">{order.trackingNumber}</p>
                 </div>
-              ))}
-          </div>
-        )}
+                <div className="w-1/4 flex flex-col gap-y-1">
+                  <p className="text-[10px] md:text-xs text-slate-700 font-medium">Origin</p>
+                  <p className="font-semibold">{order.originPort}</p>
+
+                </div>
+                <div className="w-1/4 flex flex-col gap-y-1">
+                  <p className="text-[10px] md:text-xs text-slate-700 font-medium">Destination</p>
+                  <p className="font-semibold">{order.destinationPort}</p>
+
+                </div>
+                <div className="w-1/4 font-medium text-green-600 flex flex-col gap-y-1">
+                  <p className="text-[10px] md:text-xs text-slate-700 font-medium">Date & Time</p>
+                  <p className="font-semibold">{formatDateTime(order.dateCreated)}</p>
+                </div>
+              </div>
+            ))}
+        </div>
       </main>
     </>
   );

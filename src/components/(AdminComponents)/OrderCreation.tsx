@@ -1,336 +1,127 @@
 "use client";
-import { FormEvent, useState } from "react";
-import generateRandomNumber from "@/lib/GenerateTrackingNumber";
+
+import { useState, useEffect, FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+
+//Utils
 import { makeApiRequest } from "@/lib/apiUtils";
-//Import Icons
+import generateRandomNumber from "@/lib/GenerateTrackingNumber";
+
+//Icons
 import { RxCross1 } from "react-icons/rx";
 
-//Types
-type OrderDetailsProps = {
-  onClose: () => void;
-};
-type InitialProps = {
-  trackingNumber: string;
-  originPort: string;
-  destinationPort: string;
-  transportationMode: string;
-  pieces: number;
-  length: number;
-  weight: number;
-  width: number;
-  height: number;
-  deliveryRequiredDate: string;
-  statusChanges: object;
-  estimatedDeliveryDate: string;
-  dateCreated: string;
-};
-
-const initialState: InitialProps = {
+const initialOrderState: OrderState = {
   trackingNumber: "",
   originPort: "",
   destinationPort: "",
   transportationMode: "",
   pieces: 0,
-  length: 0.0,
-  weight: 0.0,
-  width: 0.0,
-  height: 0.0,
+  length: 0,
+  weight: 0,
+  width: 0,
+  height: 0,
   deliveryRequiredDate: "",
-  statusChanges: {},
   estimatedDeliveryDate: "",
   dateCreated: "",
 };
 
-const OrderCreation = ({ onClose }: OrderDetailsProps) => {
+const OrderCreation: React.FC<OrderDetailsProps> = ({ onClose }) => {
+
   const router = useRouter();
-  //Form State
-  const [state, setState] = useState(initialState);
+  const [order, setOrder] = useState<OrderState>(initialOrderState);
   const [loading, setLoading] = useState<boolean>(false);
-  //Tracking Code State and Function
-  const [trackingCode, setTrackingCode] = useState<string>("");
 
-  const handleGenerateCode = () => {
-    const newTrackingCode = generateRandomNumber();
-    setTrackingCode(newTrackingCode);
+  useEffect(() => {
+    const trackingNumber = generateRandomNumber();
+    setOrder((prevState) => ({ ...prevState, trackingNumber }));
+  }, []);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    const updatedValue = ["pieces", "length", "weight", "width", "height"].includes(name)
+      ? parseFloat(value)
+      : value;
+
+    setOrder((prevState) => ({ ...prevState, [name]: updatedValue }));
   };
 
-  //Function for the State Changing
-  const handleChange = (event: any) => {
-    const { name, value } = event.target;
+  const resetForm = () => setOrder(initialOrderState);
 
-    // Check if the property is one of the numeric fields
-    const isNumericField = [
-      "pieces",
-      "length",
-      "weight",
-      "width",
-      "height",
-    ].includes(name);
-
-    // If it's a numeric field, parse the value as a number
-    const updatedValue = isNumericField ? parseFloat(value) : value;
-
-    setState({ ...state, [name]: updatedValue });
-  };
-
-  //Close Function
-  const closeToggle = () => {
-    onClose();
-  };
-  //Function for the Form Reset
-  const handleFormReset = () => {
-    setState(initialState);
-  };
-  //Submit function
-  const onSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     setLoading(true);
 
-    makeApiRequest("/packages", "post", state, {
+    makeApiRequest("/packages", "post", order, {
       onSuccess: () => {
-        // Handle success
-        handleFormReset()
-        setLoading(false);
         toast.success("The Package was created successfully.");
+        resetForm();
         router.refresh();
+        setLoading(false);
       },
       onError: (error: any) => {
-        // Handle error
-        handleFormReset()
+        toast.error(
+          error === "Missing Fields"
+            ? "Please Fill In All The Details"
+            : "Package Wasn't Created, Please Try Again Later"
+        );
+        resetForm();
         setLoading(false);
-        if (error) {
-          if (error === "Missing Fields") {
-            toast.error("Please Fill In All The Details");
-          } else {
-            toast.error("Package Wasn't Created, Please Try Again Later");
-          }
-        }
       },
     });
   };
+
   return (
-    <main
-      className={`fixed left-0 top-0 z-[70] flex h-screen w-full items-center justify-center bg-black bg-opacity-50`}
-    >
-      <div className="special h-[40rem] w-80 overflow-y-auto bg-bgWhite p-4 sm:w-96 md:w-[30rem] lg:w-[40rem]">
+    <main className="fixed inset-0 z-70 flex h-screen items-center justify-center bg-black bg-opacity-50">
+      <div className="h-[40rem] w-80 overflow-y-scroll rounded-lg bg-bgWhite p-4 sm:w-96 md:w-[30rem] lg:w-[40rem]">
         <div className="flex justify-end">
           <RxCross1
             size={24}
             className="cursor-pointer"
-            onClick={closeToggle}
+            onClick={onClose}
           />
         </div>
         <p className="mt-4 text-center text-xs font-bold sm:text-sm md:text-base">
           Fill In The Details of The New Package
         </p>
-        <form className="mt-4 text-xs md:text-sm" onSubmit={onSubmit}>
+        <form className="mt-4 text-xs md:text-sm" onSubmit={handleSubmit}>
           <div className="w-full">
             <label htmlFor="trackingNumber" className="block cursor-pointer">
               Tracking Number
             </label>
             <input
-              required
-              value={state.trackingNumber}
-              onChange={handleChange}
+              readOnly
+              value={order.trackingNumber}
               type="text"
               name="trackingNumber"
               id="trackingNumber"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black focus:outline-orange md:p-3"
+              className="mt-2 w-full rounded-md border border-black bg-gray-200 p-2 text-black focus:outline-orange md:p-3"
             />
           </div>
-          <div className="mt-2 flex items-center gap-x-3 md:gap-x-5">
-            <p className="w-[70%] text-xs md:text-sm">{trackingCode}</p>
+          {["originPort", "destinationPort", "transportationMode", "pieces", "weight", "length", "width", "height", "dateCreated", "estimatedDeliveryDate", "deliveryRequiredDate"].map((field, index) => (
+            <div key={index} className="mt-4">
+              <label htmlFor={field} className="block cursor-pointer">
+                {field.split(/(?=[A-Z])/).join(" ").replace(/^\w/, (c) => c.toUpperCase())}
+              </label>
+              <input
+                required
+                value={(order as any)[field]}
+                onChange={handleChange}
+                type={field.includes("Date") ? "datetime-local" : field.includes("date") ? "datetime-local" : "text"}
+                name={field}
+                id={field}
+                className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
+                placeholder={`Enter ${field.split(/(?=[A-Z])/).join(" ")}`}
+              />
+            </div>
+          ))}
+          <div className="mt-8 flex justify-end">
             <button
-              type="button"
-              onClick={handleGenerateCode}
-              className="w-[30%] rounded-md bg-orange py-2 text-center text-xs text-white duration-500 hover:bg-orange1 sm:text-sm md:py-3 md:text-base"
+              disabled={loading}
+              className="rounded-md bg-orange p-3 text-xs font-bold text-white md:text-sm"
             >
-              Generate
+              {loading ? "Saving..." : "Save"}
             </button>
-          </div>
-          <div className="mt-2">
-            <label htmlFor="originPort" className="block cursor-pointer">
-              Origin Port
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.originPort}
-              type="text"
-              name="originPort"
-              id="originPort"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="Origin Port"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="destinationPort" className="block cursor-pointer">
-              Destination Port
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.destinationPort}
-              type="text"
-              name="destinationPort"
-              id="destinationPort"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="Destination Port"
-            />
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="transportationMode"
-              className="block cursor-pointer"
-            >
-              Mode Of Transport
-            </label>
-            <select
-              onChange={handleChange}
-              value={state.transportationMode}
-              required
-              name="transportationMode"
-              id="transportationMode"
-              className="mt-2 w-full cursor-pointer rounded-md border border-black bg-white p-3 text-xs text-black focus:outline-orange md:text-sm"
-            >
-              <option value="">Mode of Transportation</option>
-              <option value="Flight">Flight</option>
-              <option value="Ship">Ship</option>
-              <option value="Road">Road</option>
-              <option value="Rail">Rail</option>
-            </select>
-          </div>
-          <div className="mt-4">
-            <label htmlFor="pieces" className="block cursor-pointer">
-              Quantity
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.pieces}
-              type="number"
-              name="pieces"
-              id="pieces"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="How Many Pieces(Quantity)"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="weight" className="block cursor-pointer">
-              Weight
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.weight}
-              type="number"
-              name="weight"
-              id="weight"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="The Weight in KG"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="length" className="block cursor-pointer">
-              Length
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.length}
-              type="number"
-              name="length"
-              id="length"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="The Length in CM"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="width" className="block cursor-pointer">
-              Width
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.width}
-              type="number"
-              name="width"
-              id="width"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="The Width in CM"
-            />
-          </div>
-          <div className="mt-4">
-            <label htmlFor="height" className="block cursor-pointer">
-              Height
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              value={state.height}
-              type="number"
-              name="height"
-              id="height"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black placeholder:text-xs focus:outline-orange md:p-3 md:placeholder:text-sm"
-              placeholder="The height in CM"
-            />
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="dateCreated"
-              className="block cursor-pointer"
-            >
-              Desired Created Date and Time
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              type="datetime-local"
-              name="dateCreated"
-              id="dateCreated"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black focus:outline-orange md:p-3"
-            />
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="deliveryRequiredDate"
-              className="block cursor-pointer"
-            >
-              Delivery Required Date and Time
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              type="datetime-local"
-              name="deliveryRequiredDate"
-              id="deliveryRequiredDate"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black focus:outline-orange md:p-3"
-            />
-          </div>
-          <div className="mt-4">
-            <label
-              htmlFor="estimatedDeliveryDate"
-              className="block cursor-pointer"
-            >
-              Estimated Time and Date
-            </label>
-            <input
-              required
-              onChange={handleChange}
-              type="datetime-local"
-              name="estimatedDeliveryDate"
-              id="estimatedDeliveryDate"
-              className="mt-2 w-full rounded-md border border-black bg-white p-2 text-black focus:outline-orange md:p-3"
-            />
-          </div>
-          <div className="mt-8">
-            <input
-              type="submit"
-              value={loading ? "Creating Your Package..." : "Create Package"}
-              className="w-full cursor-pointer rounded-md bg-orange font-semibold text-white duration-500 hover:bg-orange1 p-3"
-            />
           </div>
         </form>
       </div>

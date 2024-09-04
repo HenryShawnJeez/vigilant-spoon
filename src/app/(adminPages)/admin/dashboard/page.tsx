@@ -7,8 +7,8 @@ import getAllStatus from "@/app/actions/getAllStatus";
 import getAllContactForms from "@/app/actions/getAllContactForm";
 import getAllQuote from "@/app/actions/getAllQuote";
 
-export const revalidate = 60
 
+export const revalidate = 0
 const page = async () => {
    const packages = await getPackages()
    const status = await getAllStatus()

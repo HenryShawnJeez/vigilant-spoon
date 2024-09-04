@@ -9,6 +9,9 @@ export const formatStatus = (status: string): string => {
       Arrived: 'Package Arrived',
       OutForDelivery: 'Package Out for Delivery',
       Delivered: 'Delivered',
+      Customs_Delay: "Customs Delay",
+      Clearance_Required: "Clearance is Required",
+      Documentation_Issue: "Documentation Issue"
     };
   
     return statusMapping[status] || status;

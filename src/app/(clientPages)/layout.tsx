@@ -1,5 +1,3 @@
-import type { Metadata } from 'next'
-import { roboto } from "../fonts";
 import '../globals.css';
 import { Toaster } from 'sonner';
 
@@ -7,26 +5,17 @@ import { Toaster } from 'sonner';
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-
-
-export const metadata: Metadata = {
-  title: 'United Traverse Courier Services.',
-  description: `Welcome to UnitedTraverse, your premier destination for seamless courier solutions! At UnitedTraverse, we take pride in being more than just a courier service. We're your reliable partner in connecting people and businesses across the globe.`,
-}
-
-export default function RootLayout({
+export default function ClientLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={roboto.className}>
+      <main className="text-xs md:text-sm xl:text-base">
         <Header />
         {children}
         <Toaster richColors position="top-center" closeButton />
         <Footer />
-      </body>
-    </html>
+      </main>
   )
 }

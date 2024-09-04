@@ -1,21 +1,22 @@
-import Sidebar from "@/components/Sidebar";
-import { roboto } from "@/app/fonts";
-import '../../globals.css';
 import { Toaster } from 'sonner';
 
+//Components
+import Sidebar from "@/components/Sidebar";
 
-export default function RootLayout({
-  children,
-}: {
+//Styles
+import '../../globals.css';
+
+
+export default function AdminLayout({ children }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={roboto.className}>
+    <main className='text-xs md:text-sm xl:text-base'>
       <Sidebar />
-        <section className="mainWidth">{children}</section>
-        <Toaster richColors position="top-center" closeButton />
-      </body>
-    </html>
+      <section className="mainWidth">
+        {children}
+      </section>
+      <Toaster richColors position="top-center" closeButton />
+    </main>
   )
 }

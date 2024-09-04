@@ -2,61 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Loader */
-
-.loader {
-    width: 200px;
-    height: 200px;
-    box-sizing: border-box;
-    border-radius: 50%;
-    border-top: 10px solid #e8724a;
-    position: relative;
-    animation: load 2s linear infinite;
-  }
-  
-  .loader::before,.loader::after {
-    content: '';
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    box-sizing: border-box;
-    border-radius: 50%;
-  }
-  
-  .loader::before {
-    border-top: 10px solid #e67e22;
-    transform: rotate(120deg);
-  }
-  
-  .loader::after {
-    border-top: 10px solid #3498db;
-    transform: rotate(240deg);
-  }
-  
-  .loader span {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    color: #fff;
-    text-align: center;
-    line-height: 200px;
-    animation: a2 2s linear infinite;
-  }
-  
-  @keyframes load {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  @keyframes a2 {
-    to {
-      transform: rotate(-360deg);
-    }
-  }
-
 /* 404 hollow text */
 .hollowText {
   color: transparent;
@@ -82,8 +27,8 @@ body::-webkit-scrollbar-thumb:hover {
 body::-webkit-scrollbar-track {
   background: #231f20;
 }
-/* Custom style for customized scroll bar */
 
+/* Custom style for customized scroll bar */
 .special::-webkit-scrollbar {
   height: 5px;
 }

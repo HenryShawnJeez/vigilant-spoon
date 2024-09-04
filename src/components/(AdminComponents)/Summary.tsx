@@ -20,35 +20,35 @@ const Summary = ({packageLength, packagesDelivered, contactForms, quotes}: Packa
     return ( 
         <main className="">
             <div className="flex justify-end">
-               <p className="text-xs sm:text-sm lg:text-base text-gray-600 font-semibold">{formattedDate}.</p> 
+               <p className="text-gray-600 font-semibold">{formattedDate}.</p> 
             </div>
-            <div className="flex gap-x-5 overflow-x-auto special mt-10 pb-4">
-               <div className="w-1/4 min-w-[18rem] bg-[#4CB9E7] p-8 flex gap-x-5 rounded-md">
-               <PiPackageFill className="text-white" size={40}/>
+            <div className="flex flex-wrap justify-center mt-10 gap-5">
+               <div className="w-[23%] min-w-[16rem] bg-[#4CB9E7] p-8 flex gap-x-5 rounded-md">
+               <PiPackageFill className="text-white" size={30}/>
                     <div className="text-white ">
                         <p className="text-2xl md:text-3xl font-bold">{packageLength}</p>
-                        <p className="text-base">Total Packages</p>
+                        <p>Total Packages</p>
                     </div>
                 </div>
-                <div className="w-1/4 min-w-[18rem] bg-[#FB8B24] p-8 flex gap-x-5 rounded-md">
-                    <BsInfoCircleFill className="text-white" size={40}/>
+                <div className="w-[23%] min-w-[16rem] bg-[#FB8B24] p-8 flex gap-x-5 rounded-md">
+                    <BsInfoCircleFill className="text-white" size={30}/>
                     <div className="text-white ">
                         <p className="text-2xl md:text-3xl font-bold">{contactForms}</p>
-                        <p className="text-base">Total Support</p>
+                        <p>Total Support</p>
                     </div>
                 </div>
-                <div className="w-1/4 min-w-[18rem] bg-[#65B741] p-8 flex gap-x-5 rounded-md">
-                    <BsFillPatchCheckFill className="text-white" size={40}/>
+                <div className="w-[23%] min-w-[16rem] bg-[#65B741] p-8 flex gap-x-5 rounded-md">
+                    <BsFillPatchCheckFill className="text-white" size={30}/>
                     <div className="text-white ">
                         <p className="text-2xl md:text-3xl font-bold">{packagesDelivered}</p>
-                        <p className="text-base">Total Packages Delivered</p>
+                        <p>Total Packages Delivered</p>
                     </div>
                 </div> 
-                <div className="w-1/4 min-w-[18rem] bg-red-600 p-8 flex gap-x-5 rounded-md">
-                    <MdReceiptLong className="text-white" size={40}/>
+                <div className="w-[23%] min-w-[16rem] bg-red-600 p-8 flex gap-x-5 rounded-md">
+                    <MdReceiptLong className="text-white" size={30}/>
                     <div className="text-white ">
                         <p className="text-2xl md:text-3xl font-bold">{quotes}</p>
-                        <p className="text-base">Total Requested Quotes</p>
+                        <p>Total Requested Quotes</p>
                     </div>
                 </div> 
             </div>

@@ -4,8 +4,8 @@ import getPackages from "@/app/actions/getPackages";
 import AdminHeading from "@/components/(AdminComponents)/AdminHeading";
 import OrderSummary from "@/components/(AdminComponents)/OrderSummary";
 
-export const revalidate = 60
 
+export const revalidate = 0
 const page = async () => {
     const packages = await getPackages()
 

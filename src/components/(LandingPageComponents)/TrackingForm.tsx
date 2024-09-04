@@ -27,14 +27,12 @@ export default function TrackingForm() {
     const trackingNumber = formData.get("trackingNumber")
 
     try {
-
       if (trackingNumber) {
       const packageData = await getPackageWithStatusChanges(trackingNumber as string);
       toast.success("Your Package Tracking Details.")
       setPackageDetails(packageData);
       handleHideModal()
       }
-
     } catch (error) {
       toast.error("Package tracking unavailable. Please try again later.")
     }
@@ -58,13 +56,13 @@ export default function TrackingForm() {
               name="trackingNumber"
               onChange={handleInputChange}
               value={trackingID}
-              className="peer w-full border-b border-footerBrown px-4 py-2 text-xs font-semibold focus:border-orange focus:outline-none sm:text-sm md:text-base"
+              className="peer w-full border-b border-footerBrown px-4 py-3 font-semibold focus:border-orange focus:outline-none"
             />
             <p className="relative -top-[3.5rem] text-xs font-bold duration-500 peer-focus:-top-[4rem] md:text-sm">
               Tracking Number
             </p>
           </div>
-          <button type="submit" className="mt-4 w-full cursor-pointer bg-orange py-2 text-center text-white duration-500 hover:bg-blue md:py-3">
+          <button type="submit" className="mt-4 w-full cursor-pointer bg-orange text-center text-white duration-500 hover:bg-blue py-3">
             Track
           </button>
         </form>

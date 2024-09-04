@@ -45,7 +45,7 @@ model PackageStatusChange {
   timestamp     String
   status        PackageStatus
   location      String?
-  package       Package       @relation(fields: [packageId], references: [id])
+  package       Package       @relation(fields: [packageId], references: [id], onDelete: Cascade)
   packageId     String        @db.ObjectId
 }
 
@@ -94,4 +94,7 @@ enum PackageStatus {
   Arrived
   OutForDelivery
   Delivered
+  Customs_Delay
+  Clearance_Required
+  Documentation_Issue
 }

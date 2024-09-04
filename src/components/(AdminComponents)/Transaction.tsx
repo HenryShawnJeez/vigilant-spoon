@@ -1,9 +1,12 @@
 "use client"
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
+//Utils
 import { formatDateTime } from "@/lib/dateTimeUtils";
 
-//Import Needed Icons
+//Icons
 import { PiPackageFill } from "react-icons/pi";
 
 
@@ -21,11 +24,11 @@ const Transaction = (orders : any) => {
             {orders.length !== 0 && <div className="mt-10 w-full min-w-[40rem]"> 
             {orders?.orders && orders.orders.map((order: any) => (
                     <div key={order.id} onClick={() => router.push(`/admin/orders/${order.id}`)}className="flex justify-between items-center mt-4 border-b border-gray-400 py-2 cursor-pointer">
-                    <PiPackageFill className="text-orange" size={30}/>
-                    <p className="text-base sm:text-lg lg:text-xl font-bold w-1/4 text-center">{order.trackingNumber}</p>
-                    <p className="text-base sm:text-lg lg:text-xl font-bold w-1/4 text-center">{order.originPort}</p>
-                    <p className="text-base sm:text-lg lg:text-xl font-bold w-1/4 text-center">{new Date(order.deliveryRequiredDate).toLocaleDateString()}</p>
-                    <p className="text-sm lg:text-base w-1/4 text-center text-green-600 font-semibold">{formatDateTime(order.dateCreated)}</p>
+                    <PiPackageFill className="text-orange mr-2" size={30}/>
+                    <p className="w-1/4 font-semibold">{order.trackingNumber}</p>
+                    <p className="w-1/4 font-semibold">{order.originPort}</p>
+                    <p className="w-1/4 font-semibold">{order.destinationPort}</p>
+                    <p className="w-1/4 text-green-600">{formatDateTime(order.dateCreated)}</p>
                 </div>  
              ))}
             </div>
