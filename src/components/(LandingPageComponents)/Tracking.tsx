@@ -20,6 +20,7 @@ const Tracking = ({ trackingID, packageTracking, onHideModal }: trackingProps) =
     const thirdStatus = statusChangesArray[2]
     const fourthStatus = statusChangesArray[3]
     const fifthStatus = statusChangesArray[4]
+    const sixthStatus = statusChangesArray[5]
     const lastStatus = statusChangesArray[statusChangesArray.length - 1]?.status;
 
 
@@ -74,12 +75,21 @@ const Tracking = ({ trackingID, packageTracking, onHideModal }: trackingProps) =
                     </div>
                     <div className="relative">
                         <div className={`h-[5.5rem] w-3 ${fifthStatus ? "bg-bgGreen" : "bg-bgGrey"} mx-auto`}></div>
+                        <div className={`${fifthStatus?.status === lastStatus ? "bg-bgGreen animate-bounce" : "bg-white"} h-2 w-2 rounded-[50%] mx-auto absolute z-10 left-[40%]`}></div>
+                        <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
+                            <p className="font-light text-base sm:text-lg md:text-xl">{fifthStatus && formatStatus(fifthStatus.status)}</p>
+                            <p className="text-xs text-black capitalize">{fifthStatus ? fifthStatus?.location : ""}</p>
+                            <p className="text-xs text-bgGreen">{fifthStatus ? (formatDateTime(fifthStatus?.timestamp)) : ""}</p>
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <div className={`h-[5.5rem] w-3 ${sixthStatus ? "bg-bgGreen" : "bg-bgGrey"} mx-auto`}></div>
                     </div>
                     <div className="relative flex items-center">
-                        <div className={`w-10 h-10 rounded-[50%] ${fifthStatus ? "bg-bgGreen" : "bg-bgGrey"} flex items-center justify-center -mt-2`}><GoCheckCircle className={`${fifthStatus ? "text-white" : "text-bgGrey"}`} size={26} /></div>
+                        <div className={`w-10 h-10 rounded-[50%] ${sixthStatus ? "bg-bgGreen" : "bg-bgGrey"} flex items-center justify-center -mt-2`}><GoCheckCircle className={`${sixthStatus ? "text-white" : "text-bgGrey"}`} size={26} /></div>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem] -mt-2 ml-2">
-                            <p className="font-light text-sm sm:text-base md:text-lg">{fifthStatus && "DELIVERED"}</p>
-                            <p className={`${fifthStatus ? "" : "hidden"} text-base font-medium text-bgGreen -mt-1`}>{packageTracking.destinationPort}</p>
+                            <p className="font-light text-sm sm:text-base md:text-lg">{sixthStatus && "DELIVERED"}</p>
+                            <p className={`${sixthStatus ? "" : "hidden"} text-base font-medium text-bgGreen -mt-1`}>{packageTracking.destinationPort}</p>
                         </div>
                     </div>
 
