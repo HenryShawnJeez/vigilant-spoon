@@ -21,12 +21,13 @@ const Tracking = ({ trackingID, packageTracking, onHideModal }: trackingProps) =
     const fourthStatus = statusChangesArray[3]
     const fifthStatus = statusChangesArray[4]
     const sixthStatus = statusChangesArray[5]
+    const seventhStatus = statusChangesArray[6]
     const lastStatus = statusChangesArray[statusChangesArray.length - 1]?.status;
 
 
     return (
         <main className="fixed h-screen w-full bg-black bg-opacity-80 flex items-center justify-center z-[70] top-0 left-0">
-            <div className="relative w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-[45rem] bg-bgWhite p-4 md:p-8">
+            <div className="relative w-[90%] sm:w-[80%] md:w-[70%] lg:w-[60%] xl:w-[50%] h-[50rem] bg-bgWhite p-4 md:p-8">
                 <div className="absolute top-4 right-4 text-red-600">
                     <RxCrossCircled size={24} className="cursor-pointer" onClick={onHideModal} />
                 </div>
@@ -84,12 +85,21 @@ const Tracking = ({ trackingID, packageTracking, onHideModal }: trackingProps) =
                     </div>
                     <div className="relative">
                         <div className={`h-[5.5rem] w-3 ${sixthStatus ? "bg-bgGreen" : "bg-bgGrey"} mx-auto`}></div>
+                        <div className={`${sixthStatus?.status === lastStatus ? "bg-bgGreen animate-bounce" : "bg-white"} h-2 w-2 rounded-[50%] mx-auto absolute z-10 left-[40%]`}></div>
+                        <div className="absolute left-[100%] w-[14rem] sm:w-[20rem]">
+                            <p className="font-light text-base sm:text-lg md:text-xl">{sixthStatus && formatStatus(sixthStatus.status)}</p>
+                            <p className="text-xs text-black capitalize">{sixthStatus ? sixthStatus?.location : ""}</p>
+                            <p className="text-xs text-bgGreen">{sixthStatus ? (formatDateTime(sixthStatus?.timestamp)) : ""}</p>
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <div className={`h-[5.5rem] w-3 ${seventhStatus ? "bg-bgGreen" : "bg-bgGrey"} mx-auto`}></div>
                     </div>
                     <div className="relative flex items-center">
-                        <div className={`w-10 h-10 rounded-[50%] ${sixthStatus ? "bg-bgGreen" : "bg-bgGrey"} flex items-center justify-center -mt-2`}><GoCheckCircle className={`${sixthStatus ? "text-white" : "text-bgGrey"}`} size={26} /></div>
+                        <div className={`w-10 h-10 rounded-[50%] ${seventhStatus ? "bg-bgGreen" : "bg-bgGrey"} flex items-center justify-center -mt-2`}><GoCheckCircle className={`${seventhStatus ? "text-white" : "text-bgGrey"}`} size={26} /></div>
                         <div className="absolute left-[100%] w-[14rem] sm:w-[20rem] -mt-2 ml-2">
-                            <p className="font-light text-sm sm:text-base md:text-lg">{sixthStatus && "DELIVERED"}</p>
-                            <p className={`${sixthStatus ? "" : "hidden"} text-base font-medium text-bgGreen -mt-1`}>{packageTracking.destinationPort}</p>
+                            <p className="font-light text-sm sm:text-base md:text-lg">{seventhStatus && "DELIVERED"}</p>
+                            <p className={`${seventhStatus ? "" : "hidden"} text-base font-medium text-bgGreen -mt-1`}>{packageTracking.destinationPort}</p>
                         </div>
                     </div>
 

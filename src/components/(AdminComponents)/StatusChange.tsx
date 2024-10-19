@@ -16,14 +16,12 @@ const initialState: InitialStateProps = {
   timestamp: "",
 };
 
-const statusOptions = [ "PickedUp", "PackageReceived", "InTransitRoad", "InFlight", "InShip", "InRail", "Arrived", "OutForDelivery", "Delivered", "Customs_Delay", "Clearance_Required", "Documentation_Issue"];
-
-const StatusChange =({ thePackageID }: { thePackageID: string }) => {
+const StatusChange = ({ thePackageID }: { thePackageID: string }) => {
   const router = useRouter();
   const [state, setState] = useState<InitialStateProps>(initialState);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setState((prevState) => ({ ...prevState, [name]: value }));
   };
@@ -64,14 +62,9 @@ const StatusChange =({ thePackageID }: { thePackageID: string }) => {
           <label htmlFor="statusChanges" className="block cursor-pointer text-xs md:text-sm">
             New Status
           </label>
-          <select required name="statusChanges" id="statusChanges" value={state.statusChanges} onChange={handleChange} className="focus:bg-white outline-0 border focus:border-orange px-8 py-2 md:py-3 border-black/70 rounded-md">
-            <option value="" disabled>Select a status</option>
-            {statusOptions.map((status) => (
-              <option key={status} value={status}>
-                {status.replace(/_/g, " ")}
-              </option>
-            ))}
-          </select>
+          <input type="text" name="statusChanges" id="statusChanges" placeholder="Enter new location or note" value={state.statusChanges} onChange={handleChange}
+            className="focus:bg-white outline-0 border focus:border-orange px-8 py-2 md:py-3 border-black/70 rounded-md"
+          />
         </div>
         <div className="mt-4 flex flex-col gap-y-2">
           <label htmlFor="location" className="cursor-pointer text-xs md:text-sm">
